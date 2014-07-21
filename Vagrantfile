@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
   config.hostmanager.include_offline = true
   
   config.vm.define "pm", primary: true do |pm|
-	pm.vm.box = "precise64"
+	pm.vm.box = "pm"
 	pm.vm.hostname = "puppet"
     pm.vm.provision :shell, :path => "bootstrap_pm.sh"
     pm.vm.network :forwarded_port, host: 8080, guest: 80
@@ -31,7 +31,7 @@ Vagrant.configure("2") do |config|
 
  config.vm.define "slave1" do |sl1|
 
-    sl1.vm.box = "precise64"
+    sl1.vm.box = "slave1"
     sl1.vm.hostname = "slave1"
     sl1.vm.provision :shell, :path => "bootstrap_sl1.sh"
     sl1.vm.network :forwarded_port, host: 8000, guest: 80
@@ -50,7 +50,7 @@ Vagrant.configure("2") do |config|
   end
   
  config.vm.define "slave2" do |sl2|
-    sl2.vm.box = "centos-6.5"
+    sl2.vm.box = "slave2"
     sl2.vm.hostname = "slave2"
     sl2.vm.provision :shell, :path => "bootstrap_sl2.sh"
     sl2.vm.network :forwarded_port, host: 3000, guest: 80
