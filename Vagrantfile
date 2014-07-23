@@ -6,13 +6,15 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: "echo Hello"
-
+  config.ssh.username = "vagrant"
+  config.ssh.password = "vagrant"
+  config.vm.network "public_network"
   config.hostmanager.enabled = true
   config.hostmanager.ignore_private_ip = false
   config.hostmanager.include_offline = true
   
   config.vm.define "pm", primary: true do |pm|
-	pm.vm.box = "pm"
+	pm.vm.box = "pm1"
 	pm.vm.hostname = "puppet"
     pm.vm.provision :shell, :path => "bootstrap_pm.sh"
     pm.vm.network :forwarded_port, host: 8080, guest: 80
