@@ -19,6 +19,7 @@ Vagrant.configure("2") do |config|
     pm.vm.network :forwarded_port, host: 8443, guest: 443
     pm.vm.network :forwarded_port, host: 3001, guest: 3000
 	pm.vm.network "private_network", ip: "10.0.1.101"
+	pm.vm.network :public_network
 
 #    pm.vm.synced_folder "pm_etc-puppet/", '/etc/puppetlabs', :create => "true"
 	
@@ -38,8 +39,6 @@ Vagrant.configure("2") do |config|
     sl1.vm.network :forwarded_port, host: 8000, guest: 80
 	sl1.vm.network "private_network", ip: "10.0.1.102"
 
-#	sl1.vm.synced_folder "sl1_etc-puppet/", '/etc/puppet', :create => "true"
-
 	
 	#create links and change memory usage
 	config.vm.provider :virtualbox do |vb|
@@ -57,7 +56,6 @@ Vagrant.configure("2") do |config|
     sl2.vm.network :forwarded_port, host: 3000, guest: 80
 	sl2.vm.network "private_network", ip: "10.0.1.103"
 
-#	sl2.vm.synced_folder "sl2_etc-puppet/", '/etc/puppet', :create => "true"
 
 	
 	#create links and change memory usage
