@@ -5,32 +5,33 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure("2") do |config|
-  config.vm.provision "shell", inline: "echo Hello"
-
+  config.vm.provision "shell", inline: "echo Welcome to master"
   config.hostmanager.enabled = true
   config.hostmanager.ignore_private_ip = false
   config.hostmanager.include_offline = true
-  
+
+#PM 
   config.vm.define "pm", primary: true do |pm|
 	pm.vm.box = "pm"
 	pm.vm.hostname = "puppet"
     pm.vm.provision :shell, :path => "bootstrap_pm.sh"
     pm.vm.network :forwarded_port, host: 8080, guest: 80
+    pm.vm.network :forwarded_port, host: 8443, guest: 443
+    pm.vm.network :forwarded_port, host: 3001, guest: 3000
 	pm.vm.network "private_network", ip: "10.0.1.101"
 
-    pm.vm.synced_folder "pm_etc-puppet/", '/etc/puppetlabs', :create => "true"
+#    pm.vm.synced_folder "pm_etc-puppet/", '/etc/puppetlabs', :create => "true"
 	
     #create links and change memory usage
 
 	config.vm.provider :virtualbox do |vb|
-	vb.customize ["modifyvm", :id, "--memory", "384"]
+	vb.customize ["modifyvm", :id, "--memory", "1024"]
     #vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/vagrant-root", "1"]
     #vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
 	end
  end
-
+#slave1
  config.vm.define "slave1" do |sl1|
-
     sl1.vm.box = "slave1"
     sl1.vm.hostname = "slave1"
     sl1.vm.provision :shell, :path => "bootstrap_sl1.sh"
@@ -48,7 +49,7 @@ Vagrant.configure("2") do |config|
 
 	end
   end
-  
+#slave2
  config.vm.define "slave2" do |sl2|
     sl2.vm.box = "slave2"
     sl2.vm.hostname = "slave2"
